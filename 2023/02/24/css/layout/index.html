@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="xyayf" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      css布局 
+      
+      
+      |
+    
+     我的博客
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.ico">
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Xyayf</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">css布局</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-02-24 22:24:27
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/css/" title="css">
+                    #css
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="视口元标签"><a href="#视口元标签" class="headerlink" title="视口元标签"></a>视口元标签</h1><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>这个元标签告诉移动端浏览器，它们应该将视口宽度设定为设备的宽度</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,initial-scale=1&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h2><p>1.以ipnone6为例，document.documentElment.clientWidth的值iphone6的屏幕宽度375<br>但是我们需要的是750px</p>
+<h2 id="解决问题1"><a href="#解决问题1" class="headerlink" title="解决问题1"></a>解决问题1</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> (<span class="keyword">function</span> (<span class="params">doc,win</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> dpr = win.<span class="property">devicePixelRatio</span>,</span><br><span class="line">        scale = <span class="number">1</span> / dpr;</span><br><span class="line">    doc.<span class="title function_">write</span>(<span class="string">&quot;&lt;meta name=viewport content=width=device-width,initial-scale=&quot;</span>+scale+<span class="string">&quot;,minimum-scale=&quot;</span>+scale+<span class="string">&quot;,maximum-scale=&quot;</span>+scale+<span class="string">&quot;,user-scalable=no&gt;&quot;</span>)</span><br><span class="line">    <span class="keyword">var</span> fn = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> deviceWidth =  doc.<span class="property">documentElement</span>.<span class="property">clientWidth</span>; <span class="comment">// 获取的是css像素，也是逻辑像素</span></span><br><span class="line">        <span class="comment">// 移动设备的横向逻辑像素超过640（这时候物理像素大于1280），可以去访问pc端了。</span></span><br><span class="line">        <span class="comment">// if (deviceWidth &gt; 1280) &#123; // 保持font-size值不变。</span></span><br><span class="line">        <span class="comment">//     deviceWidth = 1280;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">// console.log(deviceWidth)</span></span><br><span class="line">        doc.<span class="property">documentElement</span>.<span class="property">style</span>.<span class="property">fontSize</span> = deviceWidth / <span class="number">10</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;orientationchange&#x27;</span><span class="keyword">in</span> win ? <span class="string">&#x27;orientationchange&#x27;</span> : <span class="string">&#x27;resize&#x27;</span>, fn ,<span class="literal">false</span>);</span><br><span class="line">    doc.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>,fn,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="variable language_">document</span>,<span class="variable language_">window</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientWidth</span>)<span class="comment">//phywith 网页可见区域宽750px</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">window</span>.<span class="property">screen</span>.<span class="property">width</span>) <span class="comment">//css-width  设备屏幕宽度375</span></span><br><span class="line"></span><br><span class="line">       <span class="comment">//把网页可见区域的范围放到 整个屏幕中 以iphone为例</span></span><br><span class="line">       <span class="comment">// initial-scale=1.0 例如是375的ipone设备屏幕宽度  那么最多显示375px宽度的内容超出内容会有滚动条</span></span><br><span class="line">       <span class="comment">// 如果是0.5 那么最多显示750px内容，超出部分有滚动条 </span></span><br><span class="line">       <span class="comment">// initial-scal值也不是想写多少就是多少和 dpr有关 </span></span><br><span class="line">       <span class="comment">//这就思考我们的网页到底是设计多大的尺寸了</span></span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h1><h3 id="媒介查询"><a href="#媒介查询" class="headerlink" title="媒介查询"></a>媒介查询</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 从大到小，从小到大 */</span></span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">800px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">1em</span> <span class="number">2em</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="自适应"><a href="#自适应" class="headerlink" title="自适应"></a>自适应</h1><h3 id="百分比"><a href="#百分比" class="headerlink" title="百分比"></a>百分比</h3><ul>
+<li>子元素的 padding，margin 如果设置百分比，不论是垂直方向或者是水平方向，都相对于直接父亲元素的 width，而与父元素的 height 无关。</li>
+<li>子元素的 top&#x2F;left 和 bottom&#x2F;right 如果设置百分比，则相对于直接非 static 定位(默认定位)的父元素的高度&#x2F;宽度。</li>
+<li>border-radius，transform 如果设置百分比，则相对于本身<br> 百分比自适应不适合复杂的自适应布局</li>
+</ul>
+<h3 id="vw-x2F-vh"><a href="#vw-x2F-vh" class="headerlink" title="vw&#x2F;vh"></a>vw&#x2F;vh</h3><p>  vw表示相对于视图窗口的宽度，vh表示相对于视图窗口高度。 任意层级元素，在使用vw单位的情况下，1vw都等于视图宽度的百分之一</p>
+<h3 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h3><p> rem是相对于根元素html的font-size属性，默认情况下浏览器字体大小为16px，此时1rem &#x3D; 16px。</p>
+<h1 id="常见布局实现方式"><a href="#常见布局实现方式" class="headerlink" title="常见布局实现方式"></a>常见布局实现方式</h1><h3 id="float布局"><a href="#float布局" class="headerlink" title="float布局"></a>float布局</h3><h3 id="position布局"><a href="#position布局" class="headerlink" title="position布局"></a>position布局</h3><h3 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h3><p>一维布局，适合做局部布局，flex 布局一次只能处理一个维度上的元素布局，一行或者一列。</p>
+<h3 id="grid布局"><a href="#grid布局" class="headerlink" title="grid布局"></a>grid布局</h3><p>Grid 是二维布局系统，通常用于整个页面的规划</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item item1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item item2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item item3&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item item4&quot;</span>&gt;</span>4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item item5&quot;</span>&gt;</span>5<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span>6<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span>7<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span>8<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span>9<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.grid-container</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>:grid;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>:<span class="number">100px</span> <span class="number">1</span>fr <span class="number">100px</span>; <span class="comment">/*3列 中间自适应 100px repeat(2,1fr)*/</span></span><br><span class="line">    <span class="attribute">grid-template-rows</span>: <span class="number">100px</span> <span class="number">300px</span> <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">grid-column</span>-<span class="attribute">gap</span>:<span class="number">10px</span>;<span class="comment">/*列间隔*/</span></span><br><span class="line">    <span class="attribute">grid-row</span>-<span class="attribute">gap</span>:<span class="number">10px</span>; <span class="comment">/*行间隔 */</span></span><br><span class="line">    <span class="comment">/* grid-gap 属性是 grid-row-gap 和 the grid-column-gap  */</span></span><br><span class="line">      <span class="attribute">grid-template-areas</span>:</span><br><span class="line">    <span class="string">&#x27;header header header header header header&#x27;</span></span><br><span class="line">    <span class="string">&#x27;menu main main main right right&#x27;</span></span><br><span class="line">    <span class="string">&#x27;menu footer footer footer footer footer&#x27;</span>;</span><br><span class="line">    <span class="attribute">grid-auto-flow</span>: row dense;  <span class="comment">/* 属性指定自动布局算法怎样运作，精确指定在网格中被自动布局的元素怎样排列 */</span></span><br><span class="line">    justify-items:center;<span class="comment">/*相对于单元格水平位置 设置每一个单元格方向左中右 start center end stretch默认*/</span></span><br><span class="line">    <span class="attribute">align-items</span>:center;<span class="comment">/*相对于单元格垂直位置 设置每一个单元格方向上中下 start center end stretch默认*/</span></span><br><span class="line">    <span class="comment">/* place-items:center center justify-items和align-items的简写  */</span></span><br><span class="line">    <span class="attribute">justify-content</span>:start;<span class="comment">/*相对于整个容器的水平对齐位置 左中右 */</span></span><br><span class="line">    <span class="attribute">align-content</span>:start；<span class="comment">/*相对于整个容器的垂直对齐位置 上中下 */</span></span><br><span class="line">    <span class="comment">/* place-content:center center justify-content和align-content的简写  */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item1</span> &#123;</span><br><span class="line">    </span><br><span class="line">  <span class="attribute">grid-row-start</span>: <span class="number">1</span>;<span class="comment">/*跨行从第一行到第三行 */</span></span><br><span class="line">  <span class="attribute">grid-row-end</span>: <span class="number">3</span>;</span><br><span class="line">  <span class="comment">/* grid-row grid-row-start和grid-row-end简写 */</span></span><br><span class="line">  <span class="attribute">order</span>:<span class="number">1</span>;  </span><br><span class="line">  <span class="comment">/* justify-self  相对于单元格 水平位置 */</span></span><br><span class="line">  <span class="comment">/* /align-self 相对以单元格垂直位置 */</span></span><br><span class="line">  <span class="comment">/* grid-area:1/2/3/3  grid-row-start 、grid-column-start 、grid-row-end  和 grid-column-end  的简写*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item1</span> &#123; <span class="attribute">grid-area</span>: header; &#125;</span><br><span class="line"><span class="selector-class">.item2</span> &#123; <span class="attribute">grid-area</span>: menu; &#125;</span><br><span class="line"><span class="selector-class">.item3</span> &#123; <span class="attribute">grid-area</span>: main; &#125;</span><br><span class="line"><span class="selector-class">.item4</span> &#123; <span class="attribute">grid-area</span>: right; &#125;</span><br><span class="line"><span class="selector-class">.item5</span> &#123; <span class="attribute">grid-area</span>: footer; &#125;</span><br></pre></td></tr></table></figure>
+
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/24/css/cssrprop/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-02-24 22:24:27
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/css/" title="css">
+                        #css
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/02/25/css/style/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%8F%A3%E5%85%83%E6%A0%87%E7%AD%BE"><span class="toc-text">视口元标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0"><span class="toc-text">描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%981"><span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%981"><span class="toc-text">解决问题1</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-text">响应式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AA%92%E4%BB%8B%E6%9F%A5%E8%AF%A2"><span class="toc-text">媒介查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94"><span class="toc-text">自适应</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BE%E5%88%86%E6%AF%94"><span class="toc-text">百分比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vw-x2F-vh"><span class="toc-text">vw&#x2F;vh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rem"><span class="toc-text">rem</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">常见布局实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#float%E5%B8%83%E5%B1%80"><span class="toc-text">float布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#position%E5%B8%83%E5%B1%80"><span class="toc-text">position布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flex%E5%B8%83%E5%B1%80"><span class="toc-text">flex布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grid%E5%B8%83%E5%B1%80"><span class="toc-text">grid布局</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" href="">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        我的博客
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        ’
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

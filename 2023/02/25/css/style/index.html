@@ -11,8 +11,8 @@
   
   <title>
     
-      标签 
-       : Welcome
+      css常见样式解决方案 
+      
       
       |
     
@@ -102,30 +102,141 @@
 
 
       <div class="flex-container">
-        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<div class="container tag-details">
-  <div class="content-title">
-    <h2>
-      <span>Welcome</span>
-    </h2>
-  </div>
+
+  <!-- LaTex Display -->
+
   
-    <div class="post-list">
-      <div class="post-item" title="Hello World">
-        <span class="time-m-d">2023-02-24</span>
-        <a href="/2023/02/24/hello-world/">
-          <span>Hello World</span>
-        </a>
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">css常见样式解决方案</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-02-25 00:38:21
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/css/" title="css">
+                    #css
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
+      <div class="markdown-body">
+        <h1 id="实现单行／多行文本溢出的省略样式"><a href="#实现单行／多行文本溢出的省略样式" class="headerlink" title="实现单行／多行文本溢出的省略样式"></a>实现单行／多行文本溢出的省略样式</h1><h3 id="单行"><a href="#单行" class="headerlink" title="单行"></a>单行</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">white-space</span>: nowrap; <span class="comment">/*文字强制不换行 */</span></span><br><span class="line"><span class="attribute">text-overflow</span>: ellipsis; <span class="comment">/*文字溢出换省略号 */</span></span><br><span class="line"><span class="attribute">overflow</span>: hidden;<span class="comment">/* 溢出文字隐藏 */</span></span><br></pre></td></tr></table></figure>
+<h3 id="多行"><a href="#多行" class="headerlink" title="多行"></a>多行</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">​ <span class="attribute">display</span>: -webkit-box; <span class="comment">/*元素转换为弹性容器,在一行排列 */</span></span><br><span class="line"> -webkit-box-orient: vertical; <span class="comment">/*表示盒子对象的子元素的排列方式*/</span></span><br><span class="line"> -webkit-line-clamp: <span class="number">3</span>; <span class="comment">/*限制文本的行数，表示文本第多少行省略*/</span></span><br><span class="line"> <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line"> <span class="attribute">overflow</span>: hidden;</span><br></pre></td></tr></table></figure>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/24/css/layout/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-02-25 00:38:21
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/css/" title="css">
+                        #css
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
     </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8D%95%E8%A1%8C%EF%BC%8F%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E7%9A%84%E7%9C%81%E7%95%A5%E6%A0%B7%E5%BC%8F"><span class="toc-text">实现单行／多行文本溢出的省略样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%A1%8C"><span class="toc-text">单行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%A1%8C"><span class="toc-text">多行</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
   
-  <nav class="post-navigation">
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-    <span class="page-num">1 / 1</span>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
     
-  </nav>
-</div>
+  </div>
+
 
         
 <div class="footer">
