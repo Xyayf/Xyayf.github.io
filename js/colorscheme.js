@@ -2,7 +2,9 @@
 let switchHandle = document.querySelector('#switch-color-scheme')
 let themeIcon = document.querySelector('#theme-icon')
 var html = document.documentElement
-
+html.setAttribute('color-mode', 'dark')
+themeIcon.classList = 'iconfont icon-sun'
+localStorage.setItem('color-mode', 'dark')
 const switchMode = () => {
     let attr = html.getAttribute('color-mode')
     let colorMode = 'light'
