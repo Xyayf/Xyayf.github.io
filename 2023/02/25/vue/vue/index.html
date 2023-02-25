@@ -11,7 +11,7 @@
   
   <title>
     
-      归档 
+      算法的理解 ? 
       
       
       |
@@ -102,140 +102,123 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">算法的理解 ?</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-02-25 22:06:34
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                    #算法
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/25/Algorithm/operation/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-02-25 22:06:34
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                        #算法
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
       
-      <div class="post-item" title="算法的理解 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/vue/vue/">
-            <span>算法的理解 ?</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="数据的运算">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/operation/">
-            <span>数据的运算</span>
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="数据结构">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/data_structure/">
-            <span>数据结构</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法中时间复杂度，空间复杂度的理解？如何计算？ ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/complexity/">
-            <span>算法中时间复杂度，空间复杂度的理解？如何计算？ ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法的理解 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/algorithm/">
-            <span>算法的理解 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css兼容性">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/compatibility/">
-            <span>css兼容性</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="应用场景解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/js/js/">
-            <span>应用场景解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="前端性能优化">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/performance/performance/">
-            <span>前端性能优化</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css常见样式解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/style/">
-            <span>css常见样式解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css布局">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/layout/">
-            <span>css布局</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css属性拓展">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/cssrprop/">
-            <span>css属性拓展</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css3">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/css/">
-            <span>css3</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">

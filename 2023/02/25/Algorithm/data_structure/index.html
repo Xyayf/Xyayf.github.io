@@ -11,7 +11,7 @@
   
   <title>
     
-      归档 
+      数据结构 
       
       
       |
@@ -102,140 +102,169 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">数据结构</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-02-25 12:17:45
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                    #算法
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>日常在编写任何代码的都需要一个良好的算法思维，选择好的算法或者数据结构，能让整个程序效率更高。</p>
+<p>一个程序 &#x3D; 算法 + 数据结构，数据结构是实现算法的基础，选择合适的数据结构可以带来更高的运行或者存储效率。</p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>数据结构是计算机存储、组织数据的方式，是指相互之间存在一种或多种特定关系的数据元素的集合。</p>
+<h5 id="数据元素相互之间的关系称为结构，根据数据元素之间关系的不同特性，通常有如下四类基本的结构："><a href="#数据元素相互之间的关系称为结构，根据数据元素之间关系的不同特性，通常有如下四类基本的结构：" class="headerlink" title="数据元素相互之间的关系称为结构，根据数据元素之间关系的不同特性，通常有如下四类基本的结构："></a>数据元素相互之间的关系称为结构，根据数据元素之间关系的不同特性，通常有如下四类基本的结构：</h5><ul>
+<li>线性结构：该结构的数据元素之间存在着一对一的关系</li>
+<li>树型结构：该结构的数据元素之间存在着一对多的关系</li>
+<li>图形结构：该结构的数据元素之间存在着多对多的关系，也称网状结构</li>
+<li>集合结构：该结构的数据元素间的关系是“属于同一个集合”</li>
+</ul>
+<h5 id="由于数据结构种类太多，逻辑结构可以再分成为"><a href="#由于数据结构种类太多，逻辑结构可以再分成为" class="headerlink" title="由于数据结构种类太多，逻辑结构可以再分成为"></a>由于数据结构种类太多，逻辑结构可以再分成为</h5><ul>
+<li><p>线性结构：有序数据元素的集合，其中数据元素之间的关系是一对一的关系，除了第一个和最后一个数据元素之外，其它数据元素都是首尾相接的</p>
+</li>
+<li><p>非线性结构：各个数据元素不再保持在一个线性序列中，每个数据元素可能与零个或者多个其他数据元素发生关联。</p>
+</li>
+</ul>
+<p><img src="https://static.vue-js.com/9aedc5d0-1aa6-11ec-8e64-91fdec0f05a1.png">  </p>
+<h1 id="常见的数据结构"><a href="#常见的数据结构" class="headerlink" title="常见的数据结构"></a>常见的数据结构</h1><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>   在程序设计中，为了处理方便， 一般情况把具有相同类型的若干变量按有序的形式组织起来，这些按序排列的同类数据元素的集合称为数组。</p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>   在程序设计中，一种特殊的线性表，只能在某一端插入和删除的特殊线性表。</p>
+<p>   按照先进后出的特性存储数据，先进入的数据被压入栈底，最后的数据在栈顶，需要读数据的时候从栈顶开始弹出数据。</p>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p> 在程序设计中，一种特殊的线性表，只允许在表的前端进行删除操作，而在表的后端进行插入操作。</p>
+<p> 其特性是先进先出。</p>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>是一种物理存储单元上非连续、非顺序的存储结构。</p>
+<p>数据元素（链表中每一个元素称为结点）的逻辑顺序是通过链表中的指针链接次序实现的。</p>
+<p>每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域</p>
+<h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><h3 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h3>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/25/Algorithm/complexity/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-02-25 12:17:45
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                        #算法
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/02/25/Algorithm/operation/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="算法的理解 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/vue/vue/">
-            <span>算法的理解 ?</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="数据的运算">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/operation/">
-            <span>数据的运算</span>
-          </a>
-        </div>
-      </div>
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0%E7%9B%B8%E4%BA%92%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E7%A7%B0%E4%B8%BA%E7%BB%93%E6%9E%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB%E7%9A%84%E4%B8%8D%E5%90%8C%E7%89%B9%E6%80%A7%EF%BC%8C%E9%80%9A%E5%B8%B8%E6%9C%89%E5%A6%82%E4%B8%8B%E5%9B%9B%E7%B1%BB%E5%9F%BA%E6%9C%AC%E7%9A%84%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">数据元素相互之间的关系称为结构，根据数据元素之间关系的不同特性，通常有如下四类基本的结构：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%B1%E4%BA%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%A7%8D%E7%B1%BB%E5%A4%AA%E5%A4%9A%EF%BC%8C%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E5%8F%AF%E4%BB%A5%E5%86%8D%E5%88%86%E6%88%90%E4%B8%BA"><span class="toc-text">由于数据结构种类太多，逻辑结构可以再分成为</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">常见的数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-text">队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-text">链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91"><span class="toc-text">树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE"><span class="toc-text">图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86"><span class="toc-text">堆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8"><span class="toc-text">散列表</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="数据结构">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/data_structure/">
-            <span>数据结构</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法中时间复杂度，空间复杂度的理解？如何计算？ ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/complexity/">
-            <span>算法中时间复杂度，空间复杂度的理解？如何计算？ ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法的理解 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/algorithm/">
-            <span>算法的理解 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css兼容性">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/compatibility/">
-            <span>css兼容性</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="应用场景解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/js/js/">
-            <span>应用场景解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="前端性能优化">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/performance/performance/">
-            <span>前端性能优化</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css常见样式解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/style/">
-            <span>css常见样式解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css布局">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/layout/">
-            <span>css布局</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css属性拓展">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/cssrprop/">
-            <span>css属性拓展</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css3">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/css/">
-            <span>css3</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
