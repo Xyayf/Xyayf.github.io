@@ -167,7 +167,120 @@
           
       </div>
       <div class="markdown-body">
-        
+        <h1 id="请求响应优化"><a href="#请求响应优化" class="headerlink" title="请求响应优化"></a>请求响应优化</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>更快的内容到达时间</p>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><ul>
+<li>更好的连接传输效率</li>
+<li>更少的请求数量</li>
+<li>更小的资源大小</li>
+<li>合适的缓存策略</li>
+</ul>
+<h2 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h2><h3 id="DNS解析优化"><a href="#DNS解析优化" class="headerlink" title="DNS解析优化"></a>DNS解析优化</h3><h4 id="DNS缓存"><a href="#DNS缓存" class="headerlink" title="DNS缓存"></a>DNS缓存</h4><h4 id="DNS预解析"><a href="#DNS预解析" class="headerlink" title="DNS预解析"></a>DNS预解析</h4><p> 是尝试在请求资源之前解析域名，这可能是在后面要加载的文件，也可能是用户尝试打开的链接目标，域名解析和内容载入是串行的网络操作，所以这个方式能减少用户的等待时间，提升用户体验。<br> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- html &lt;link&gt;元素通过dns-prefetch的rel属性值提供此功能，然后在href属性中指要跨域的域名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span>  <span class="attr">href</span>=<span class="string">&quot;https://fonts.googleapis.com&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure><br>禁用DNS预解析,默认高级浏览器存在隐式的DNS prefetch，虽然使用DNS prefetch能够加快页面的解析速度，但是也不能滥用，因为开发者指出禁用DNS预解析能后节省每月100亿的DNS查询。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;x-dns-prefetch-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;off&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="更多DNS解析优化"><a href="#更多DNS解析优化" class="headerlink" title="更多DNS解析优化"></a>更多DNS解析优化</h4><ul>
+<li>延长DNS缓存时间</li>
+<li>尽可能使用A或AAAA记录代替CNAME</li>
+<li>使用CDN加速域名</li>
+<li>自己搭建DNS服务</li>
+</ul>
+<h4 id="附：清除DNS缓存"><a href="#附：清除DNS缓存" class="headerlink" title="附：清除DNS缓存"></a>附：清除DNS缓存</h4><ol>
+<li>清除浏览DNS缓存<ul>
+<li>清除DNS缓存：chrome:&#x2F;&#x2F;net-internals&#x2F;#dns</li>
+<li>清除套接字缓存池：chrome:&#x2F;&#x2F;net-internal&#x2F;#sockets</li>
+</ul>
+</li>
+<li>清除系统DNS缓存<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Windows中查看DNS缓存记录</span></span><br><span class="line">ipconfig / displaydns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在Windows中清除DNS缓存记录</span></span><br><span class="line">ipcongif / flushdns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 macOS中清除DNS缓存记录</span></span><br><span class="line"></span><br><span class="line">sudo killall -HUP mDNSResponder</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h3 id="HTTP长连接"><a href="#HTTP长连接" class="headerlink" title="HTTP长连接"></a>HTTP长连接</h3><p>持久连接的好处在于减少TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使HTTP请求和响应能够更早的结束，这样Web页面的显示速度也相应提高。</p>
+<p>客户端和服务发现对方时间没有活动，就可以主动关闭连接。不过，规范的做法是，在客户端在最后一个请求时，发送Connection：close，明确要求服务器关闭TCP连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection:close</span><br></pre></td></tr></table></figure>
+<p>目前，对于同一域名，在大多数浏览器允许同时建立6个持久连接。</p>
+<h4 id="HTTP-x2F-1-1"><a href="#HTTP-x2F-1-1" class="headerlink" title="HTTP&#x2F;1.1"></a>HTTP&#x2F;1.1</h4><p>HTTP1.1版引入了管道机制（pipeline）,即在同一个TCP连接里面，客户端可以同时发送多个请求。</p>
+<p>管线化技术出现后，不用等待响应即可直接发送下一个请求。这样就能做到同时并行发送多个请求。而不需要一个接一个的等待响应，与挨个连接相比。管道机制则是允许浏览器同时发出A请求和B请求，但是服务器还是按照顺序响应请求，所以请求数越多，时间差就越明显。要是前面回应特别慢，后面就会有许多请求排队等着，这称为队头堵塞（Head-of-line blocking）。</p>
+<p>为了解决队头堵塞问题，只有两种方法:</p>
+<ul>
+<li>减少请求数</li>
+<li>同时多开持久连接<br>这导致了很多页面优化技巧，比如合并脚本和样式表，将图片嵌入CSS代码，域名分片（domain sharding）等等。</li>
+</ul>
+<h4 id="HTTP-x2F-2"><a href="#HTTP-x2F-2" class="headerlink" title="HTTP&#x2F;2"></a>HTTP&#x2F;2</h4><p>HTTP&#x2F;2复用TCP连接，在一个连接里，客户端和浏览器都可以同时发送多个请求和回应，而且不用按照顺序一一对应，这样就避免了“队头堵塞”</p>
+<p>举例来说，在一个TCP连接里面，服务器同时收到A请求和B请求，于是先回应A请求，结果发现处理过程非常耗时，于是就发送A请求已经处理好的部分，接着回应B请求，完成后，再发送A请求剩下部分。</p>
+<p>这种双向，实时的通信，就叫做多工（Multiplexing）</p>
+<p>这个是对比Http1和HTTP2资源加载的在线示例：<a target="_blank" rel="noopener" href="http://http2.akamai.com/demo">http://http2.akamai.com/demo</a></p>
+<p>HTTP&#x2F;2将每个请求或回应的所有数据包，称为一个数据流(stream),每个数据流都有一个独一无二的编号。数据包发送的时候，都必须标记数据流ID，用来区分它属于哪个数据流，另外还规定，客户发出的数据流ID一律为奇数，服务器发出的ID为偶数。</p>
+<p>数据流发送到一半的时候，客户端和服务器都可以发送信号（RST_STREAM帧），取消这个数据流。1.1版取消数据流的唯一方法，就是关闭TCP连接，这就是说，HTTP&#x2F;2可以取消某一次请求，同时保证TCP连接还打开，可以被其他请求使用。</p>
+<p>客户端还可以指定数据流的优先，优先级别越高，服务器就会越早回应。</p>
+<p>HTTP协议不带有状态，每次请求都必须附上所有信息，这会浪费很多带宽，也影响速度。HTTP&#x2F;2对这一点做了优化，引入了头信息压缩机制（header compression）。一方面，头信息使用gzip或compress压缩后再发送。另一方面，客户端和服务器同时维护一张头信息表，所有字段都会存入这个表，生成一个索引号，以后就不发送同样字段，只发送索引号，这样就提高速度了。<br> HTTP&#x2F;2允许服务器推送。</p>
+<h4 id="HTTP优化"><a href="#HTTP优化" class="headerlink" title="HTTP优化"></a>HTTP优化</h4><h5 id="响应压缩方案"><a href="#响应压缩方案" class="headerlink" title="响应压缩方案"></a>响应压缩方案</h5><h6 id="使用Gzip压缩文本"><a href="#使用Gzip压缩文本" class="headerlink" title="使用Gzip压缩文本"></a>使用Gzip压缩文本</h6><p>浏览器是服务器之间会使用主动协商机制。浏览器发送Accept-Encoding首部，其中包含有它所支持的压缩的算法，以及各自的优先级，服务器则从中选择一种，使用该算法对响应的消息主体进行压缩，并发送Content-Encoding首部告诉浏览器算法。</p>
+<h6 id="压缩图片"><a href="#压缩图片" class="headerlink" title="压缩图片"></a>压缩图片</h6><h5 id="请求压缩方案"><a href="#请求压缩方案" class="headerlink" title="请求压缩方案"></a>请求压缩方案</h5><h6 id="头部数据压缩"><a href="#头部数据压缩" class="headerlink" title="头部数据压缩"></a>头部数据压缩</h6><p>头信息压缩机制 (http2)</p>
+<h6 id="请求体数据压缩"><a href="#请求体数据压缩" class="headerlink" title="请求体数据压缩"></a>请求体数据压缩</h6><p>必须通过开发人员通过代码压缩,应用场景比如发表长篇博客。和后端配合使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rawBody=<span class="string">&#x27;content=test&#x27;</span></span><br><span class="line"><span class="keyword">var</span> rawlen=rawBody.<span class="property">length</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bufBody=<span class="keyword">new</span> <span class="title class_">Uint8Array</span>(rawlen)</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i&lt;rawlen;i++)&#123;</span><br><span class="line">    bufBody[i]=rawBody.<span class="title function_">charCodeAt</span>(i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> format=<span class="string">&#x27;gizp&#x27;</span><span class="comment">//gzip/deflate/deflate-raw</span></span><br><span class="line"><span class="keyword">var</span> buf</span><br><span class="line"><span class="keyword">switch</span>(format)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;gizp&#x27;</span>:</span><br><span class="line">        buf=<span class="variable language_">window</span>.<span class="property">pako</span>.<span class="title function_">gzip</span>(bufBody)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;deflate&#x27;</span>:</span><br><span class="line">         buf=<span class="variable language_">window</span>.<span class="property">pako</span>.<span class="title function_">deflate</span>(bufBody)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;deflate-raw&#x27;</span>:</span><br><span class="line">        buf=<span class="variable language_">window</span>.<span class="property">pako</span>.<span class="title function_">deflateRaw</span>(bufBody)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> xhr=<span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;POST&#x27;</span>,<span class="string">&#x27;/node/&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>,format)</span><br><span class="line">xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>,<span class="string">&#x27;application/x-www-form-urlen&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">send</span>(buf)</span><br></pre></td></tr></table></figure>
+<h3 id="HTTP-缓存"><a href="#HTTP-缓存" class="headerlink" title="HTTP 缓存"></a>HTTP 缓存</h3><h4 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h4><p> 针对不太改变的静态资源，比如图片资源</p>
+<p><img src="https://s1.ax1x.com/2023/02/26/pppoBin.png"></p>
+<h4 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h4><p> 方式1基于时间戳<br><img src="https://s1.ax1x.com/2023/02/26/pppTa6K.png"><br>方式2 基于ETag的协商缓存<br>为了弥补通过时间戳判断不足，其内容主要是服务器为不同资源进行哈希运算所生成的一个字符串，该字符串类似于文件指纹，只要文件内容编码存在差异，对应的ETag标签值就会不同，因此可以使用Etag对文件资源进行更精准的变化感知。<br><img src="https://s1.ax1x.com/2023/02/26/pppHDJA.png"></p>
+<h3 id="CDN缓存"><a href="#CDN缓存" class="headerlink" title="CDN缓存"></a>CDN缓存</h3><p>适用于存放在网站上的静态资源文件，包括第三方库的Javascript脚本文件，样式表文件及图片等，这些文件的特点就是访问频率高，承载流量大，但更新修改频率低。<br>如果是动态文件，比如依赖服务器端渲染得到的HTML页面，它需要借助服务器的数据进行计算才能得到，所以它不太适合放在CDN缓存服务器上。<br><img src="https://s1.ax1x.com/2023/02/26/pppbxHS.png"></p>
+<p>请求静态资源CDN服务器的域名有意设计成于主站域名不同，这样做的原因主要有两点：第一是避免对静态资源的请求携带不必要的Cookie信息，第二点是考虑浏览器对同一域名下并发请求的限制。</p>
+<h1 id="渲染优化"><a href="#渲染优化" class="headerlink" title="渲染优化"></a>渲染优化</h1><h2 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h2><p> 可以大体将其划分为五部分：</p>
+<ul>
+<li>JavaScript处理：前端项目中经常会需要响应用户操作，通过JavaScript对数据集进行计算，操作DOM元素，并展示动画等视觉效果，当然对于动画的实现，除了JavaScript，也可以考虑使用如CSS Animations,Transitions等技术。</li>
+<li>计算样式：在解析CSS文件后，浏览器需要根据各种算则器去匹配应该css规则的元素节点，然后计算出每个元素的最终样式。</li>
+<li>页面布局：指的是浏览器在计算完成样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于Dom树形结构中的子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生，</li>
+<li>绘制：在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色，边框，阴影，文本，图像。</li>
+<li>合成：通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确的渲染出来。</li>
+</ul>
+<p>浏览器从获取HTML到最终在屏幕上显示内容需要完成以下步骤</p>
+<ol>
+<li>处理HTML标记并构建DOM树</li>
+<li>处理CSS标记并构建CSSOM树</li>
+<li>将DOM与CSSOM合并成一个rendertree</li>
+<li>根据渲染树来布局，以计算每个节点的几何信息。</li>
+<li>将各个节点绘制到屏幕上。<br>在过程中的每个阶段都有可能出现卡顿，所以可以对各阶段所涉及的性能进行优化。</li>
+</ol>
+<h2 id="优化方案-1"><a href="#优化方案-1" class="headerlink" title="优化方案"></a>优化方案</h2><h3 id="关键渲染路径优化"><a href="#关键渲染路径优化" class="headerlink" title="关键渲染路径优化"></a>关键渲染路径优化</h3><h4 id="优化DOM"><a href="#优化DOM" class="headerlink" title="优化DOM"></a>优化DOM</h4><ul>
+<li>HTML文件尺寸尽可能小</li>
+</ul>
+<ol>
+<li>缩小文件的尺寸（Minify）删除注释、空格与换行等无用的文本</li>
+<li>使用Gzip压缩（Compress）</li>
+<li>使用缓存（HTTP Cache）</li>
+</ol>
+<h4 id="优化CSSOM"><a href="#优化CSSOM" class="headerlink" title="优化CSSOM"></a>优化CSSOM</h4><p>  css的加载会阻塞整个网页的渲染</p>
+<ul>
+<li>优化方式1 使用非阻塞加载  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">&lt;!-- 阻塞渲染 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;print.css&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 非阻塞渲染 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 打印相关样式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;print.css&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span> <span class="attr">media</span>=<span class="string">&#x27;print&#x27;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 拆分媒体查询相关CSS资源 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;other&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span> <span class="attr">media</span>=<span class="string">&#x27;(min-width:750px)&#x27;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 横屏还是竖屏相关样式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&#x27;other&#x27;</span> <span class="attr">rel</span>=<span class="string">&#x27;stylesheet&#x27;</span> <span class="attr">media</span>=<span class="string">&#x27;orientation:portrait&#x27;</span>/&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>优化方式2 适量用一点内联样式</li>
+<li>优化方式3 避免在css中使用@import，因为会增加渲染路径。又会造成阻塞，延长加载时间。请求发送是串行的。</li>
+</ul>
+<h4 id="优化JavaScript的使用"><a href="#优化JavaScript的使用" class="headerlink" title="优化JavaScript的使用"></a>优化JavaScript的使用</h4><p>所有的文本资源都应该尽可能小，JavaScript也不例外，它也需要删除未能使用的代码，缩小文件的尺寸，使用gzip压缩，使用缓存。</p>
+<p>与css资源相似JavaScript资源也是关键资源，JavaScript资源也会阻塞DOM的构建。并且JavaScript会被css文件所阻塞。  </p>
+<p>当浏览器加载HTML时遇到script标签浏览器就不能继续构建DOM，它必须立即执行此脚本，对于外部引入的脚本一样，浏览器必须等脚本下载完后，并执行结束，才能继续处理页面剩下的</p>
+<ol>
+<li>异步加载JavaScript</li>
+</ol>
+<ul>
+<li>使用defer延迟加载JavaScript，defer特性告诉浏览器不要等待脚本，相反，浏览器将继续处理HTML，构建DOM。脚本会在后台下载，然后等DOM构建完成后，DOMContentLoaded事件之前脚本才会执行。但是脚本是并行加载，但不是谁先下载完成后谁先执行，还是看引用的顺序执行。后面脚本如果需要依赖前面的代码的化。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>使用async异步加载，与defer的区别是谁先加载完成，谁先执行。</li>
+<li>预加载<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 利用空闲时间预加载指定的资源 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">href</span>=<span class="string">&quot;index.js&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li>避免同步请求</li>
+<li>延迟解析JavaScript</li>
+<li>避免运行时间长的JavaScript</li>
+<li>使用requestAnimationFrame()实现动画效果</li>
+<li>恰当使用webworker<br>把耗时的操作放入子线程，注意我客人无法读取DOM，document，window，prent等对象，只能访问navigator和location对象，无法访问本地文件系统，可以通过XMLHTTPrequest发送ajax请求但是不能用alert和confirm方法，必须与主线程的代码文件同源。执行完成后关闭子线程。</li>
+<li>事件节流和防抖<br>高频触发事件会导致相应回调函数的大量计算，进而引发页面抖动甚至卡顿，为了控制相关事件触发频率，就需要节流和防抖操作。<br>高频触发事件有scroll，resize，mousemove mouseover，keyup，keydown</li>
+</ol>
+<h4 id="计算样式优化"><a href="#计算样式优化" class="headerlink" title="计算样式优化"></a>计算样式优化</h4><p>css引擎在查找样式表时，对每条规则的匹配顺序是从右向左的。</p>
+<ul>
+<li>使用类选择器代替标签选择器</li>
+<li>避免使用通配符</li>
+<li>降低选择器的复杂性<br> 例如通过id选择器已经可以唯一确定目标元素了，就无须再附加其他多余的选择 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 像这种 */</span></span><br><span class="line"><span class="selector-class">.content</span> <span class="selector-id">#id</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>使用BEM规范 type-block__element_modifier<br> 块、元素、修饰符 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 常规写法 */</span></span><br><span class="line"><span class="selector-class">.mylist</span>&#123;&#125;</span><br><span class="line"><span class="selector-class">.mylist</span> <span class="selector-class">.item</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* BEM写法 */</span></span><br><span class="line"><span class="selector-class">.mylist</span>&#123;&#125;</span><br><span class="line"><span class="selector-class">.mylist__item_big</span>&#123;&#125;</span><br><span class="line"><span class="selector-class">.mylist__item_normal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="页面布局重绘，回流"><a href="#页面布局重绘，回流" class="headerlink" title="页面布局重绘，回流"></a>页面布局重绘，回流</h4><ul>
+<li>JavaScript中通过指定元素添加类的方式一次性完成样式修改，这样避免触发多次对页面布局重新计算</li>
+<li>缓存敏感属性值，因为每执行一次又会触发页面布局的重新计算一次例如offsetTop，offsetLeft</li>
+<li>requestAnimationFrame方法可以控制两个渲染帧之间仅触发一次，如果在其回调中一开始就读取到敏感属性，其实获取的是上一帧旧布局的值，并不会触发页面布局重新计算。将多放在写之后。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">requestAnimationFrame</span>(fn)</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> div= <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;#id&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(div.<span class="property">offsetHeight</span>)</span><br><span class="line">    div.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;my-div&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       </div>
       
         <div class="prev-or-next">
@@ -209,6 +322,23 @@
       
     </div>
     
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94%E4%BC%98%E5%8C%96"><span class="toc-text">请求响应优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84"><span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-text">核心思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88"><span class="toc-text">优化方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E8%A7%A3%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-text">DNS解析优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS%E7%BC%93%E5%AD%98"><span class="toc-text">DNS缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="toc-text">DNS预解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9ADNS%E8%A7%A3%E6%9E%90%E4%BC%98%E5%8C%96"><span class="toc-text">更多DNS解析优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E6%B8%85%E9%99%A4DNS%E7%BC%93%E5%AD%98"><span class="toc-text">附：清除DNS缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="toc-text">HTTP长连接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-x2F-1-1"><span class="toc-text">HTTP&#x2F;1.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-x2F-2"><span class="toc-text">HTTP&#x2F;2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E4%BC%98%E5%8C%96"><span class="toc-text">HTTP优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%A1%88"><span class="toc-text">响应压缩方案</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Gzip%E5%8E%8B%E7%BC%A9%E6%96%87%E6%9C%AC"><span class="toc-text">使用Gzip压缩文本</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87"><span class="toc-text">压缩图片</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%A1%88"><span class="toc-text">请求压缩方案</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%B4%E9%83%A8%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-text">头部数据压缩</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%BD%93%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-text">请求体数据压缩</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E7%BC%93%E5%AD%98"><span class="toc-text">HTTP 缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%BC%93%E5%AD%98"><span class="toc-text">强制缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="toc-text">协商缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN%E7%BC%93%E5%AD%98"><span class="toc-text">CDN缓存</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96"><span class="toc-text">渲染优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-text">优化思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88-1"><span class="toc-text">优化方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%B8%B2%E6%9F%93%E8%B7%AF%E5%BE%84%E4%BC%98%E5%8C%96"><span class="toc-text">关键渲染路径优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96DOM"><span class="toc-text">优化DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96CSSOM"><span class="toc-text">优化CSSOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96JavaScript%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">优化JavaScript的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%A0%B7%E5%BC%8F%E4%BC%98%E5%8C%96"><span class="toc-text">计算样式优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E9%87%8D%E7%BB%98%EF%BC%8C%E5%9B%9E%E6%B5%81"><span class="toc-text">页面布局重绘，回流</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
       <div class="comments-container">
