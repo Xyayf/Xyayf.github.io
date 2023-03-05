@@ -11,7 +11,7 @@
   
   <title>
     
-      归档 
+      git 
       
       
       |
@@ -102,185 +102,155 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">git</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2023-02-27 17:09:55
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/git/" title="git">
+                    #git
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><p>head版本指针<br>git add 加入暂存区</p>
+<p>git commit 提交版本号</p>
+<p>git reset  [commit_id]  版本切换 git reset –soft 版本f<br>–mixed 默认<br>当前版本指针head和当前分支指针指向 commit_id<br>暂存区指针index 指向commit_id<br>工作区内容不变<br>–soft<br>版本指针head和当前分支指针指向commit_id<br>暂存区的指针index 保持不变<br>工作区内容保持不变</p>
+<p>–hard<br>版本指针head和当前分支指针指向commit_id<br>暂存区指针index 指向commit_id<br>工作区内容重置为暂存区指向的暂存区内容</p>
+<p>git reflog和git log的区别</p>
+<p>git reflog 查看分支尖端指针变化记录</p>
+<p>git branch 可以查看本地仓库中的所有分支</p>
+<p>git branch 【new_branch_name】 基于当前版本创建一个新分支</p>
+<p>git merge dev 快速前进模式</p>
+<p>git merge –noff dev</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/26/designMode/designMode/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2023-02-27 17:09:55
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/git/" title="git">
+                        #git
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/03/03/npm/npm/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="打包到npm">
-        <div class="time-m-d">03-03</div>
-        <div class="title">
-          <a href="/2023/03/03/npm/npm/">
-            <span>打包到npm</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="git">
-        <div class="time-m-d">02-27</div>
-        <div class="title">
-          <a href="/2023/02/27/git/git/">
-            <span>git</span>
-          </a>
-        </div>
-      </div>
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="设计模式">
-        <div class="time-m-d">02-26</div>
-        <div class="title">
-          <a href="/2023/02/26/designMode/designMode/">
-            <span>设计模式</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="webpack与vite打包">
-        <div class="time-m-d">02-26</div>
-        <div class="title">
-          <a href="/2023/02/26/webpack%E2%80%94vite/webpack%E2%80%94vite/">
-            <span>webpack与vite打包</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="JavaScript性能优化">
-        <div class="time-m-d">02-26</div>
-        <div class="title">
-          <a href="/2023/02/26/performance/JavaScriptPerformance/">
-            <span>JavaScript性能优化</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="vue打包 assets和static 目录的区别 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/vue/vue/">
-            <span>vue打包 assets和static 目录的区别 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="数据的运算">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/operation/">
-            <span>数据的运算</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="数据结构">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/data_structure/">
-            <span>数据结构</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法中时间复杂度，空间复杂度的理解？如何计算？ ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/complexity/">
-            <span>算法中时间复杂度，空间复杂度的理解？如何计算？ ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="算法的理解 ?">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/Algorithm/algorithm/">
-            <span>算法的理解 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css兼容性">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/compatibility/">
-            <span>css兼容性</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="应用场景解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/js/js/">
-            <span>应用场景解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="前端性能优化">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/performance/performance/">
-            <span>前端性能优化</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css常见样式解决方案">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2023/02/25/css/style/">
-            <span>css常见样式解决方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css布局">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/layout/">
-            <span>css布局</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css属性拓展">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/cssrprop/">
-            <span>css属性拓展</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="css3">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/css/css/">
-            <span>css3</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hello World">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2023/02/24/hello-world/">
-            <span>Hello World</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
