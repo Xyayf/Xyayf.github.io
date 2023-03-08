@@ -11,7 +11,7 @@
   
   <title>
     
-      设计模式 
+      protocol 
       
       
       |
@@ -147,19 +147,19 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">设计模式</div>
+      <div class="post-title">protocol</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
-          2023-02-26 22:13:40
+          2023-03-08 14:32:08
         </span>
         
               <span class="post-tags">
                 <i class="iconfont icon-tags mr-10" title="标签"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">
-                    #设计模式
+                  <a href="/tags/protocol/" title="protocol">
+                    #protocol
                   </a>
                 </span>
                 
@@ -167,18 +167,25 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>是软件设计过程中针对特定问题简洁优雅的解决方案<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/n6rbG7RJWhu6ltZonHnmfw">https://mp.weixin.qq.com/s/n6rbG7RJWhu6ltZonHnmfw</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7061987842473345061">https://juejin.cn/post/7061987842473345061</a></p>
-<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>设计模式一共分为3大类23种，主要介绍常用的几种</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz/Uat9zHZXYibtGlBTWUzs6dkW6RkOqABdKDibwJibMNutVIibesckPiaggargzcFdoDyxKfKpuKFcZGhhW2KRWlic3bVw/640?wx_fmt=other&wxfrom=5&wx_lazy=1&wx_co=1"></p>
-<h2 id="创建型"><a href="#创建型" class="headerlink" title="创建型"></a>创建型</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Singleton ：特定类，这是我们需要访问的类，访问者要拿到的是它的实例；</span></span><br><span class="line"><span class="comment">// instance ：单例，是特定类的实例，特定类一般会提供 getInstance 方法来获取该单例；</span></span><br><span class="line"><span class="comment">// getInstance ：获取单例的方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> _instance = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">getInstance</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_instance</span>) &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">instance</span> = <span class="keyword">new</span> <span class="title class_">Singleton</span>()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果这个唯一的实例已经存在，则直接返回</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_instance</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><h2 id="结构型"><a href="#结构型" class="headerlink" title="结构型"></a>结构型</h2><h1 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h1><h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1>
+        <h1 id="MQTT-协议"><a href="#MQTT-协议" class="headerlink" title="MQTT 协议"></a>MQTT 协议</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>MQTT 是一种基于客户端-服务端架构的消息传输协议，所以在 MQTT 协议通信中，有两个最为重要的角色，它们便是服务端和客户端。</p>
+<p>服务端</p>
+<p>MQTT 服务端通常是一台服务器（broker），它是 MQTT 信息传输的枢纽，负责将 MQTT 客户端发送来的信息传递给 MQTT 客户端；MQTT 服务端还负责管理 MQTT 客户端，以确保客户端之间的通讯顺畅，保证 MQTT 信息得以正确接收和准确投递。</p>
+<p>客户端</p>
+<p>MQTT 客户端可以向服务端发布信息，也可以从服务端收取信息；我们把客户端发送信息的行为称为 “发布”信息。而客户端要想从服务端收取信息，则首先要向服务端“订阅”信息。“订阅”信息这一操作 很像我们在使用微信时“关注”了某个公众号，当公众号的作者发布新的文章时，微信官方会向关注了该公众号的所有用户发送信息，告诉他们有新文章更新了，以便用户查看。</p>
+<p>MQTT 主题</p>
+<p>上面我们讲到了，客户端想要从服务器获取信息，首先需要订阅信息，那客户端如何订阅信息呢？这里我们要引入“主题（Topic）”的概念，“主题”在 MQTT 通信中是一个非常重要的概念，客户端发布信息以及订阅信息都是围绕“主题”来进行的，并且 MQTT 服务端在管理 MQTT 信息时，也是使用“主题”来控制的。</p>
+<p>客户端发布消息时需要为消息指定一个“主题”，表示将消息发布到该主题；而对于订阅消息的客户端 来说，可通过订阅“主题”来订阅消息，这样当其它客户端或自己（当前客户端）向该主题发布消息时，MQTT 服务端就会将该主题的信息发送给该主题的订阅者（客户端）。</p>
+<p>服务端是如何通过“主题”来控制客户端之间的信息通讯，我们来看看下图实例：<br><img src="https://pic4.zhimg.com/80/v2-eb8df5ea91d2a79080b5325e705d87cb_720w.webp"></p>
+<p>以上图示中一共有三个 MQTT 客户端，它们分别是开发板、手机和电脑。开发板是“芯片温度”主题的发布者，而手机和电脑则是该主题的订阅者</p>
+<p>值得注意的是，MQTT 客户端在通信时，角色往往不是单一的，一个客户端既可以作为信息发布者也 可以同时作为信息订阅者。如下图所示：<br><img src="https://pic3.zhimg.com/80/v2-e4396bdd8940083a315a001ca49b393a_720w.webp"></p>
+<h2 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h2><p><img src="https://s1.ax1x.com/2023/03/08/ppmSfpQ.jpg"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/amyliyanice/article/details/124390980">https://blog.csdn.net/amyliyanice/article/details/124390980</a></p>
+<h1 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h1><h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2023/02/26/webpack%E2%80%94vite/webpack%E2%80%94vite/" target="_self">
+              <a href="/2023/03/03/npm/npm/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>上一页</span>
               </a>
@@ -187,15 +194,15 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
-              2023-02-26 22:13:40
+              2023-03-08 14:32:08
             </span>
             
                   <span class="post-tags">
                     <i class="iconfont icon-tags mr-10" title="标签"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">
-                        #设计模式
+                      <a href="/tags/protocol/" title="protocol">
+                        #protocol
                       </a>
                     </span>
                     
@@ -203,11 +210,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2023/02/27/git/git/" target="_self">
-                <span>下一页</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -221,7 +223,7 @@
     <div class="title">目录</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B"><span class="toc-text">创建型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">原型模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B"><span class="toc-text">结构型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">优缺点</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MQTT-%E5%8D%8F%E8%AE%AE"><span class="toc-text">MQTT 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%94%A8%E6%B3%95"><span class="toc-text">简单用法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">优缺点</span></a></li></ol>
       
     </div>
   </div>
